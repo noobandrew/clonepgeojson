@@ -1,6 +1,17 @@
-  // =============== Variável que define o código do cliente e, por consequência, o nome do .geojson a ser buscado ===============>
-  var cliente = "teste";
-  // ==============================================================================================================================>
+var hash = CryptoJS.MD5("FD02SVAOAS");
+  
+  
+  
+  window.onload = function cript(){
+    alert(hash);
+  }
+  
+  
+  
+  // =============== Variável que (1) define o código do cliente e, por consequência, o nome do .geojson a ser buscado e =============>
+  // =============== (2) puxa esse código já encriptado por MD5 na função presente no cabeçalho do arquivo .js =======================>
+  var cliente = hash;
+  // =============== POST hash to server.php and return the name of the client (to be done)
 
 
     
@@ -44,11 +55,7 @@
   '<strong>Link para consulta no SIGEF</strong>: ' +
   '<a href="https://sigef.incra.gov.br/geo/parcela/detalhe/' + feature.properties.parcela_co + '"' + ">" + "Clique aqui" +  "</a>" + "<br>" +
   "<strong>Detentor(es)</strong>: " + feature.properties.BC5PROPRIE  + "<br>" +
-  "<strong>Teste coordenadas</strong>: " + cliente + "<br>" 
-
-
-  
-  
+  "<strong>TESTE HASH MD5</strong>: " + cliente + "<br>" 
   ;
   ;
   // ===============================================================================================================================>
@@ -77,7 +84,6 @@
   bbTeam.addData(data);
   }); 
   bbTeam.addTo(map);
-
 
   //============= end of LEAFLET JAVASCRIPT CODE, GEOJSON AND ESRI TILELAYERS =================>;
 
