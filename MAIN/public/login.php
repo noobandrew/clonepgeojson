@@ -1,3 +1,7 @@
+<!--============================================ PHP START ===========================================-->
+
+<!--============================================ PHP END =============================================-->
+
 <!DOCTYPE html>
 <html lang="pt-BR" dir="ltr">
 
@@ -5,7 +9,7 @@
 <head>
 	<title>TOPOGRAPHIA | CLIENTES |</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+	<!-- Load an icon library to show a bar menu on small screens -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
 	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
@@ -51,7 +55,6 @@
 		  <a href="https://www.topographia.com.br/contato" target="_blank">Contato</a>
 		  <a href="https://www.topographia.com.br/politica-privacidade" target="_blank">Política de Privacidade</a>
 
-
 		</div>
 	  </div>
 	<img class="wave" src="img/wave.png">
@@ -60,26 +63,18 @@
 			<img src="img/BluePlanet.svg" width="200" height="300">
 		</div>
 		<div class="login-content">
-			<form action="index.html">
+			<form action="painel.php" method="post">
 				<img src="img/avatar.svg"><br><br><br>
            		<div class="input-div one">
            		   <div class="i">
            		   		<i class="fas fa-user"></i>
            		   </div>
            		   <div class="div">
-           		   		<input type="text" placeholder="seuemail@exemplo.com" id="login" >
+           		   		<input type="text" placeholder="Insira seu código TOPOGRAPHIA" name="login" >
            		   </div>
-           		</div>
-           		<div class="input-div pass">
-           		   <div class="i"> 
-           		    	<i class="fas fa-lock"></i>
-           		   </div>
-           		   <div class="div">
-           		    	<input type="password"  id="senha">
-            	   </div>
             	</div>
 				<div class="button">
-				<input type="submit" class="input" onclick="logar(); return false">
+				<input type="submit">
 				</div>
 
             	<a href="#" id="recover-password-button" disabled="true"><br>Problemas com o Login? Clique aqui.</a>
@@ -88,6 +83,12 @@
     </div>
     <script type="text/javascript" src="js/main.js"></script>
 	<script>
+		
+
+
+
+
+
 		
 	</script>
 </body>

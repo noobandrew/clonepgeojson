@@ -2,6 +2,7 @@
 <html lang="pt-BR" dir="ltr">
 
   <head>
+
     <!--=========== meta ============-->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,7 +56,7 @@
     <!--page top =============-->
     <main class="main" id="top">
     <nav class="navbar navbar-expand-lg navbar-light fixed-top py-5 d-block" data-navbar-on-scroll="data-navbar-on-scroll">
-    <div class="container"><a class="navbar-brand" href="index.html"><img src="assets/img/logo.svg" height="34" alt="logo" /></a>
+    <div class="container"><a class="navbar-brand" href="https://www.topographia.com.br"><img src="assets/img/logo.svg" height="34" alt="logo" /></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
     <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
@@ -128,6 +129,7 @@
     <div class="leaflet-bottom leaflet-right">
     <div class="leaflet-control-attribution leaflet-control">
 
+
       <!--leaflet html close=========================-->
     </div>
     </div>
@@ -192,10 +194,104 @@
     <script src="vendors/fontawesome/all.min.js"></script>
     <script src="assets/js/theme.js"></script>
     <!--=============== MAIN LEAFLET SCRIPT ===============-->
-    <script src="assets/js/mainscripts.js"> </script>
+    <script>
+
+
+var hash = <?php echo json_encode($_POST['login']); ?>; //É AQUI QUE TENHO QUE COLOCAR O ECHO DA PHP SESSION //
+var hash = CryptoJS.MD5(hash);  
+
+
+
+
+//linhas para testar se deu certo (INATIVO)
+// window.onload = function cript(){
+//  alert(hash);
+// }
+
+
+
+// ====== Variável que atribui o token do usuario (já encriptado) à variável cliente para buscar o .geojson correto. =======>
+var cliente = hash;
+// =============== POST hash to server.php and return the name of the client (to be done)
+
 
   
-    <!--================ end of javascripts ==================-->
+// ==============================================================================================================================>
+// MAIN LEAFLET JAVASCRIPT CODE, GEOJSON AND ESRI TILELAYERS ====================================================================>
+// ==============================================================================================================================>
+// Aqui, defino, primeiramente, a parte básica do mapa, como as tilelayers.
+// Em sequência, defino as coordenadas iniciais, o zoom e também qual será o arquivo .geojson a ser "puxado".
+
+var url = cliente + '.geojson';
+var map = L.map('map').setView([-29.60114361, -54.74733389], 14);  -53.78912306, -29.75566278
+var mapLink = '<a href="http://www.esri.com/">Esri</a>';
+var wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
+
+
+L.tileLayer(
+'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+attribution: '&copy; '+mapLink+', '+wholink,
+maxZoom: 17,
+}).addTo(map);
+
+
+var geojsonMarkerOptions = {
+'radius':6,
+'opacity':.5,
+'color':"red",
+'fillColor': "blue",
+'fillOpacity': 0.8
+};
+
+
+// ==============================================================================================================================>
+// PARTE QUE INTERESSA
+// aqui é onde:  
+// (1) nomeio as propriedades que o Leaflet irá pegar do .geojson 
+// (2) escrevo o link das parcelas utilizando a propriedade 'parcela_co' 
+function forEachFeature(feature, layer){
+var popupContent = "<strong>Nome da área</strong>: " + feature.properties.nome_area + "<br>" + 
+"<strong>Município</strong>: " + feature.properties.munic + "<br>" +
+"<strong>Área em Hectares</strong>: " + feature.properties.areaha + "<br>" +
+'<strong>Link para consulta no SIGEF</strong>: ' +
+'<a href="https://sigef.incra.gov.br/geo/parcela/detalhe/' + feature.properties.parcela_co + '"' + ">" + "Clique aqui" +  "</a>" + "<br>" +
+"<strong>Detentor(es)</strong>: " + feature.properties.BC5PROPRIE
+// "<strong>TESTE HASH MD5</strong>: " + cliente + "<br>" 
+;
+;
+// ===============================================================================================================================>
+
+
+
+// Configuração do Popup
+if (feature.properties && feature.properties.popupContent) {
+popupContent += feature.properties.popupContent;
+}
+layer.bindPopup(popupContent);
+};
+
+
+//var bbTeam = L.geoJSON(null, {onEachFeature: forEachFeature, style: style});
+var bbTeam = L.geoJSON(null, {
+onEachFeature: forEachFeature, 
+pointToLayer: function (feature, latlng) {
+return L.circleMarker(latlng, geojsonMarkerOptions);
+}
+});
+
+
+// Get GeoJSON data and create features.
+$.getJSON(url, function(data) {
+bbTeam.addData(data);
+}); 
+bbTeam.addTo(map);
+
+//============= end of LEAFLET JAVASCRIPT CODE, GEOJSON AND ESRI TILELAYERS =================>;
+</script>
+<!--================ end of javascripts ==================-->
+
+
+  
 
   
   </body>
